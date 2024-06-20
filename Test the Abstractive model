@@ -1,0 +1,35 @@
+from transformers import T5Tokenizer, T5ForConditionalGeneration
+from sklearn.metrics import accuracy_score
+import torch
+
+# Load the tokenizer and the trained model
+tokenizer = T5Tokenizer.from_pretrained("./abstractive_model")
+model = T5ForConditionalGeneration.from_pretrained("./abstractive_model")
+
+# Evaluate the model
+def evaluate(model, dataset):
+    model.eval()
+    predictions, references = [], []
+    for batch in dataset:
+        inputs = {
+            "input_ids": batch["input_ids"].unsqueeze(0),
+            "attention_mask": batch["attention_mask"].unsqueeze(0),
+        }
+        with torch.no_grad():
+            outputs = model.generate(inputs["input_ids"], max_length=128, num_beams=4, early_stopping=True)
+        pred = tokenizer.decode(outputs[0], skip_special_tokens=True)
+        ref = tokenizer.decode(batch["labels"], skip_special_tokens=True)
+        predictions.append(pred)
+        references.append(ref)
+    return predictions, references
+
+# Calculate accuracy (using ROUGE score as an approximation for summarization)
+from datasets import load_metric
+metric = load_metric("rouge")
+
+predictions, references = evaluate(model, test_data)
+
+# Compute ROUGE scores
+results = metric.compute(predictions=predictions, references=references, use_stemmer=True)
+rougeL = results["rougeL"].mid.fmeasure
+print(f"ROUGE-L Score: {rougeL:.4f}")
