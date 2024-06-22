@@ -191,3 +191,4 @@ print("ROUGE-L:", results["rougeL"].high.fmeasure)
 """ROUGE-1: 0.2897436474211089
 ROUGE-2: 0.07612913769479013
 ROUGE-L: 0.22019318663391835"""
+#link to access colab:https://colab.research.google.com/drive/1k9rB9q_Y5jOJp1c1MyuQEOmpwfxS7fYO?usp=sharing
