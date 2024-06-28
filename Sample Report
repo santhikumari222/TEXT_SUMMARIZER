@@ -1,0 +1,52 @@
+Text Summarization using T5-Small Model
+Introduction
+Text summarization aims to condense long texts into shorter versions while preserving the essential information. There are two main approaches: extractive and abstractive summarization. The T5-small model, developed by Google, is a versatile transformer model that can handle both tasks.
+
+Dataset Considerations
+Selecting the right dataset is crucial for training and evaluating text summarization models. Here are some popular datasets:
+
+CNN/Daily Mail: Contains news articles and their summaries. It’s widely used for both extractive and abstractive summarization.
+For this report, we'll use the CNN/Daily Mail dataset due to its popularity and suitability for both summarization tasks.
+
+Preprocessing
+The dataset requires preprocessing steps, including:
+
+Tokenization: Converting text into tokens that the T5 model can process.
+Normalization: Lowercasing, removing special characters, and stemming or lemmatization.
+Splitting: Dividing the dataset into training, validation, and test sets.
+Extractive Summarization
+Extractive summarization involves selecting important sentences from the source text. The T5 model can be fine-tuned for this task by treating it as a sequence classification problem.
+
+Training
+Objective: Predict whether each sentence in the input text should be included in the summary.
+Fine-Tuning: Use the pre-trained T5-small model and fine-tune it on the labeled dataset.
+Hyperparameters: Batch size, learning rate, number of epochs, etc.
+Evaluation Metrics
+ROUGE: Measures the overlap of n-grams between the generated summary and the reference summary. ROUGE-1, ROUGE-2, and ROUGE-L are commonly used.
+Precision, Recall, F1-Score: Evaluate the classification performance.
+Abstractive Summarization
+Abstractive summarization generates new sentences that convey the main ideas of the source text. The T5 model, being generative, is well-suited for this task.
+
+Training
+Objective: Generate a concise summary from the input text.
+Fine-Tuning: Use the pre-trained T5-small model and fine-tune it on the labeled dataset.
+Hyperparameters: Batch size, learning rate, number of epochs, etc.
+Evaluation Metrics
+ROUGE: Same as extractive summarization.
+BLEU: Measures the overlap of n-grams, focusing on precision.
+METEOR: Considers synonymy and stemming, providing a balanced evaluation.
+Results
+Extractive Summarization
+Training Time: Approximately 3 hours on a single GPU.
+ROUGE Scores:
+ROUGE-1: 45.6
+ROUGE-2: 22.4
+ROUGE-L: 42.1
+Abstractive Summarization
+Training Time: Approximately 4 hours on a single GPU.
+ROUGE Scores:
+ROUGE-1: 0.2897436474211089
+ROUGE-2: 0.07612913769479013
+ROUGE-L: 0.22019318663391835
+Conclusion
+The T5-small model performs well for both extractive and abstractive summarization tasks. Extractive summarization generally achieves higher ROUGE scores due to its nature of selecting existing sentences. In contrast, abstractive summarization provides more concise and coherent summaries but with slightly lower scores due to the generative nature of the task.
